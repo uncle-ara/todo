@@ -3,25 +3,25 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .panel {
   width: 350px;
-  height: 400px;
   background: white;
-  border-radius: 5px;
+  border-radius: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .input {
-  width: 95%;
+  padding: 10px;
 }
 
 .title {
+  margin-top: 100px;
   margin-bottom: 20px;
   font-size: 3em;
   font-family: sans-serif;
@@ -39,4 +39,7 @@
       opacity: 1;
     }
   }
+}
+
+.todos {
 }

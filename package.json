@@ -14,6 +14,7 @@
   "author": "snatvb",
   "license": "ISC",
   "dependencies": {
+    "@types/uuid": "^8.3.0",
     "antd": "^4.15.2",
     "normalize.css": "8.0.1",
     "react": "17.0.2",
@@ -21,7 +22,8 @@
     "react-redux": "7.2.2",
     "react-router-dom": "5.2.0",
     "redux-saga": "1.1.3",
-    "typesafe-actions": "5.1.0"
+    "typesafe-actions": "5.1.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.13.1",

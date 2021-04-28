@@ -13,3 +13,6 @@ runSagas()
 export type State = StateType<typeof combinedReducer>
 
 export default store
+
+// @ts-ignore
+window.store = store
