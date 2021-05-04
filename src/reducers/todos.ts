@@ -2,7 +2,8 @@ import { Reducer } from 'redux'
 import { getType } from 'typesafe-actions'
 
 import { Action } from '~/actions'
-import { add, select } from '~/actions/todos'
+import { add, remove, select } from '~/actions/todos'
+import removeFromObject from '~/helpers/removeFromObject'
 
 export type Todo = {
   id: string
@@ -30,6 +31,12 @@ export const reduceTodos: Reducer<TodosState, Action> = (
           ...state.storage,
           [action.payload.todo.id]: action.payload.todo,
         },
+      }
+    case getType(remove):
+      console.log(action.payload.id)
+      return {
+        ...state,
+        storage: removeFromObject(action.payload.id, state.storage),
       }
     case getType(select):
       return {

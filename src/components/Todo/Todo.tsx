@@ -13,10 +13,15 @@ export type Props = {
 
 export const Todo = React.memo(({ value }: Props) => {
   const selectTodo = useAction(actions.todos.select)
+  const remoteTodo = useAction(actions.todos.remove)
 
   const handleCheck = (event: CheckboxChangeEvent) => {
     console.log('Данные отправлены...')
     selectTodo(value.id, event.target.checked)
+  }
+
+  const handleDelete = () => {
+    remoteTodo(value.id)
   }
 
   return (
@@ -24,6 +29,7 @@ export const Todo = React.memo(({ value }: Props) => {
       <Checkbox checked={value.selected} onChange={handleCheck}>
         {value.text}
       </Checkbox>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   )
 })

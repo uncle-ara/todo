@@ -15,10 +15,32 @@ const { Search } = Input
 export const Main = React.memo(() => {
   const [inputText, setInputText] = useState('')
   const addTodo = useAction(actions.todos.add)
+  const remoteTodo = useAction(actions.todos.remove)
+  const selectTodo = useAction(actions.todos.select)
   const todosState = useSelector(selectors.todos.select)
 
   const handleClickSendTodo = () => {
     addTodo({ id: uuidv4(), text: inputText, selected: false })
+  }
+
+  const handleSelectAll = () => {
+    for (const iterator of Object.values(todosState.storage)) {
+      if (!iterator.selected) {
+        iterator.selected = true
+        selectTodo(iterator.id, iterator.selected)
+      } else {
+        iterator.selected = false
+        selectTodo(iterator.id, iterator.selected)
+      }
+    }
+  }
+
+  const handleSelectedRemove = () => {
+    for (const iterator of Object.values(todosState.storage)) {
+      if (iterator.selected) {
+        remoteTodo(iterator.id)
+      }
+    }
   }
 
   return (
@@ -26,6 +48,9 @@ export const Main = React.memo(() => {
       <div className={styles.title}>TODOS</div>
       <div className={styles.panel}>
         <div className={styles.input}>
+          <button onClick={handleSelectedRemove}>Delete</button>
+          <button onClick={handleSelectAll}>All</button>
+
           <Search
             placeholder="What needs to be done?"
             allowClear
