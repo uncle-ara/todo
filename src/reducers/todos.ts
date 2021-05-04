@@ -2,7 +2,7 @@ import { Reducer } from 'redux'
 import { getType } from 'typesafe-actions'
 
 import { Action } from '~/actions'
-import { add, remove, select } from '~/actions/todos'
+import { add, change, remove, select } from '~/actions/todos'
 import removeFromObject from '~/helpers/removeFromObject'
 
 export type Todo = {
@@ -46,6 +46,17 @@ export const reduceTodos: Reducer<TodosState, Action> = (
           [action.payload.id]: {
             ...state.storage[action.payload.id],
             selected: action.payload.selected,
+          },
+        },
+      }
+    case getType(change):
+      return {
+        ...state,
+        storage: {
+          ...state.storage,
+          [action.payload.id]: {
+            ...state.storage[action.payload.id],
+            text: action.payload.text,
           },
         },
       }

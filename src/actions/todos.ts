@@ -15,3 +15,10 @@ export const select = createCustomAction(
     payload: { id, selected },
   }),
 )
+
+export const change = createCustomAction(
+  'todos/CHANGE',
+  (id: Todo['id'], text: Todo['text']) => ({
+    payload: { id, text },
+  }),
+)
