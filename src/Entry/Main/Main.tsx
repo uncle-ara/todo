@@ -21,6 +21,7 @@ export const Main = React.memo(() => {
 
   const handleClickSendTodo = () => {
     addTodo({ id: uuidv4(), text: inputText, selected: false })
+    setInputText('')
   }
 
   const handleSelectAll = () => {
@@ -53,7 +54,6 @@ export const Main = React.memo(() => {
 
           <Search
             placeholder="What needs to be done?"
-            allowClear
             enterButton="Enter"
             size="large"
             value={inputText}

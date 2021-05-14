@@ -18,15 +18,16 @@ export const Todo = React.memo(({ value }: Props) => {
   const [inputText, setInputText] = useState(value.text)
   const [editMode, setEditMode] = useState(false)
 
-  const handleSend = () => {
-    setEditMode(true)
-  }
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
       changeTodo(value.id, inputText)
       setEditMode(false)
     }
+  }
+
+  const handleBlur = () => {
+    changeTodo(value.id, inputText)
+    setEditMode(false)
   }
 
   const handleCheck = (event: CheckboxChangeEvent) => {
@@ -39,7 +40,25 @@ export const Todo = React.memo(({ value }: Props) => {
 
   return (
     <div className={styles.base}>
-      <Checkbox checked={value.selected} onChange={handleCheck}>
+      <Checkbox checked={value.selected} onChange={handleCheck}></Checkbox>
+      {!editMode && (
+        <span onDoubleClick={() => setEditMode(true)}>{value.text}</span>
+      )}
+      {editMode && (
+        <input
+          onChange={(event) => setInputText(event.currentTarget.value)}
+          value={inputText}
+          autoFocus={true}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+      )}
+      {/* <label>
+        <input
+          type="checkbox"
+          checked={value.selected}
+          onChange={handleCheck}
+        />
         {!editMode && (
           <span onDoubleClick={() => setEditMode(true)}>{value.text}</span>
         )}
@@ -52,8 +71,8 @@ export const Todo = React.memo(({ value }: Props) => {
             onKeyDown={handleKeyDown}
           />
         )}
-      </Checkbox>
-      <button onClick={handleSend}>Change</button>
+      </label> */}
+
       <button onClick={handleDelete}>Delete</button>
     </div>
   )
