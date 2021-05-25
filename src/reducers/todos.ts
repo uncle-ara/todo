@@ -2,7 +2,8 @@ import { Reducer } from 'redux'
 import { getType } from 'typesafe-actions'
 
 import { Action } from '~/actions'
-import { add, change, remove, select } from '~/actions/todos'
+import * as todosActions from '~/actions/todos'
+import { change } from '~/actions/filters'
 import removeFromObject from '~/helpers/removeFromObject'
 
 export type Todo = {
@@ -11,12 +12,20 @@ export type Todo = {
   selected?: boolean
 }
 
+export enum FilterType {
+  All,
+  Active,
+  Completed,
+}
+
 export type TodosState = {
   storage: Record<Todo['id'], Todo>
+  filter: FilterType
 }
 
 const initialState: TodosState = {
   storage: {},
+  filter: FilterType.All,
 }
 
 export const reduceTodos: Reducer<TodosState, Action> = (
@@ -24,7 +33,7 @@ export const reduceTodos: Reducer<TodosState, Action> = (
   action: Action,
 ) => {
   switch (action.type) {
-    case getType(add):
+    case getType(todosActions.add):
       return {
         ...state,
         storage: {
@@ -32,13 +41,13 @@ export const reduceTodos: Reducer<TodosState, Action> = (
           [action.payload.todo.id]: action.payload.todo,
         },
       }
-    case getType(remove):
+    case getType(todosActions.remove):
       console.log(action.payload.id)
       return {
         ...state,
         storage: removeFromObject(action.payload.id, state.storage),
       }
-    case getType(select):
+    case getType(todosActions.select):
       return {
         ...state,
         storage: {
@@ -49,7 +58,7 @@ export const reduceTodos: Reducer<TodosState, Action> = (
           },
         },
       }
-    case getType(change):
+    case getType(todosActions.change):
       return {
         ...state,
         storage: {
@@ -59,6 +68,11 @@ export const reduceTodos: Reducer<TodosState, Action> = (
             text: action.payload.text,
           },
         },
+      }
+    case getType(change):
+      return {
+        ...state,
+        filter: action.payload.filter,
       }
     default:
       return state

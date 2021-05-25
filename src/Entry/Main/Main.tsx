@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Input } from 'antd'
+
+import { Divider, Input } from 'antd'
 import 'antd/dist/antd.css'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -9,6 +10,8 @@ import * as selectors from '~/selectors'
 import useSelector from '~/hooks/useSelector'
 import styles from './Main.scss'
 import { Todo } from '~/components/Todo'
+import { FilterType, Todo as TodoData } from '../../reducers/todos'
+import { Filters } from '~/components/Filters'
 
 const { Search } = Input
 
@@ -44,6 +47,12 @@ export const Main = React.memo(() => {
     }
   }
 
+  const filterTodos = {
+    [FilterType.All]: (todo: TodoData) => todo,
+    [FilterType.Active]: (todo: TodoData) => todo.selected === false,
+    [FilterType.Completed]: (todo: TodoData) => todo.selected === true,
+  } as const
+
   return (
     <div className={styles.base}>
       <div className={styles.title}>TODOS</div>
@@ -62,9 +71,14 @@ export const Main = React.memo(() => {
           />
         </div>
         <div className={styles.todos}>
-          {Object.values(todosState.storage).map((todo) => (
-            <Todo key={todo.id} value={todo} />
-          ))}
+          {Object.values(todosState.storage)
+            .filter(filterTodos[todosState.filter])
+            .map((todo) => (
+              <Todo key={todo.id} value={todo} />
+            ))}
+        </div>
+        <div className={styles.filters}>
+          {Object.keys(todosState.storage).length != 0 && <Filters />}
         </div>
       </div>
     </div>
