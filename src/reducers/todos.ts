@@ -28,10 +28,7 @@ const initialState: TodosState = {
   filter: FilterType.All,
 }
 
-export const reduceTodos: Reducer<TodosState, Action> = (
-  state = initialState,
-  action: Action,
-) => {
+export const reduceTodos: Reducer<TodosState, Action> = (state = initialState, action: Action) => {
   switch (action.type) {
     case getType(todosActions.add):
       return {
@@ -57,6 +54,16 @@ export const reduceTodos: Reducer<TodosState, Action> = (
             selected: action.payload.selected,
           },
         },
+      }
+    case getType(todosActions.selectAll):
+      return {
+        ...state,
+        storage: Object.values(state.storage)
+          .map((todo) => ({ ...todo, selected: true }))
+          .reduce((acc, todo) => {
+            acc[todo.id] = todo
+            return acc
+          }, {} as TodosState['storage']),
       }
     case getType(todosActions.change):
       return {

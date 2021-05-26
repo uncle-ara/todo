@@ -16,9 +16,8 @@ export const select = createCustomAction(
   }),
 )
 
-export const change = createCustomAction(
-  'todos/CHANGE',
-  (id: Todo['id'], text: Todo['text']) => ({
-    payload: { id, text },
-  }),
-)
+export const selectAll = createCustomAction('todos/SELECT_ALL')
+
+export const change = createCustomAction('todos/CHANGE', (id: Todo['id'], text: Todo['text']) => ({
+  payload: { id, text },
+}))

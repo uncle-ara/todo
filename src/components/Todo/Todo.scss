@@ -1,0 +1,11 @@
+.base {
+}
+
+.text {
+  font-size: 18px;
+
+  &_selected {
+    color: rgb(140, 140, 140);
+    text-decoration: line-through;
+  }
+}

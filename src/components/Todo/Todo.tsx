@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import cx from 'classnames'
 import { Checkbox } from 'antd'
 
 import { Todo as TodoStruct } from '~/reducers/todos'
@@ -42,7 +43,14 @@ export const Todo = React.memo(({ value }: Props) => {
     <div className={styles.base}>
       <Checkbox checked={value.selected} onChange={handleCheck}></Checkbox>
       {!editMode && (
-        <span onDoubleClick={() => setEditMode(true)}>{value.text}</span>
+        <span
+          className={
+            value.selected ? cx(styles.text, styles.text_selected) : styles.text
+          }
+          onDoubleClick={() => setEditMode(true)}
+        >
+          {value.text}
+        </span>
       )}
       {editMode && (
         <input

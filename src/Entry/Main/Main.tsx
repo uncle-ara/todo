@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { Divider, Input } from 'antd'
 import 'antd/dist/antd.css'
@@ -15,28 +15,42 @@ import { Filters } from '~/components/Filters'
 
 const { Search } = Input
 
+const filterTodos = {
+  [FilterType.All]: () => true,
+  [FilterType.Active]: (todo: TodoData) => todo.selected === false,
+  [FilterType.Completed]: (todo: TodoData) => todo.selected === true,
+} as const
+
 export const Main = React.memo(() => {
   const [inputText, setInputText] = useState('')
   const addTodo = useAction(actions.todos.add)
   const remoteTodo = useAction(actions.todos.remove)
-  const selectTodo = useAction(actions.todos.select)
+  const selectAll = useAction(actions.todos.selectAll)
   const todosState = useSelector(selectors.todos.select)
 
-  const handleClickSendTodo = () => {
-    addTodo({ id: uuidv4(), text: inputText, selected: false })
-    setInputText('')
-  }
+  const countTodos = useMemo(
+    () =>
+      Object.values(todosState.storage).reduce(
+        (count, todo) => {
+          if (todo.selected) {
+            count.completed += 1
+          } else {
+            count.notCompleted += 1
+          }
+          return count
+        },
+        { completed: 0, notCompleted: 0 },
+      ),
+    [todosState.storage],
+  )
 
-  const handleSelectAll = () => {
-    for (const iterator of Object.values(todosState.storage)) {
-      if (!iterator.selected) {
-        iterator.selected = true
-        selectTodo(iterator.id, iterator.selected)
-      } else {
-        iterator.selected = false
-        selectTodo(iterator.id, iterator.selected)
-      }
-    }
+  const handleClickSendTodo = () => {
+    addTodo({
+      id: uuidv4(),
+      text: inputText,
+      selected: false,
+    })
+    setInputText('')
   }
 
   const handleSelectedRemove = () => {
@@ -47,19 +61,15 @@ export const Main = React.memo(() => {
     }
   }
 
-  const filterTodos = {
-    [FilterType.All]: (todo: TodoData) => todo,
-    [FilterType.Active]: (todo: TodoData) => todo.selected === false,
-    [FilterType.Completed]: (todo: TodoData) => todo.selected === true,
-  } as const
-
   return (
     <div className={styles.base}>
       <div className={styles.title}>TODOS</div>
       <div className={styles.panel}>
         <div className={styles.input}>
           <button onClick={handleSelectedRemove}>Delete</button>
-          <button onClick={handleSelectAll}>All</button>
+          <button onClick={selectAll}>All</button>
+          <div>{countTodos.notCompleted} Item left</div>
+          <div>Clear completed ({countTodos.completed})</div>
 
           <Search
             placeholder="What needs to be done?"
