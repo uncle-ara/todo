@@ -1,6 +1,9 @@
 import React from 'react'
+import { Radio } from 'antd'
 import { FilterType } from '~/reducers/todos'
 
+import { useSelector } from 'react-redux'
+import * as selectors from '~/selectors'
 import useAction from '~/hooks/useAction'
 import actions from '~/actions'
 
@@ -13,6 +16,7 @@ const elements = [
 ]
 export const Filters = React.memo(() => {
   const changeFilter = useAction(actions.filters.change)
+  const filter = useSelector(selectors.todos.filter)
 
   const handleFilter = (type: FilterType) => {
     changeFilter(type)
@@ -21,11 +25,13 @@ export const Filters = React.memo(() => {
 
   return (
     <div className={styles.base}>
-      {elements.map(({ type, label }) => (
-        <button key={type} onClick={() => handleFilter(type)}>
-          {label}
-        </button>
-      ))}
+      <Radio.Group value={filter}>
+        {elements.map(({ type, label }) => (
+          <Radio.Button key={type} onClick={() => handleFilter(type)} value={type}>
+            {label}
+          </Radio.Button>
+        ))}
+      </Radio.Group>
     </div>
   )
 })

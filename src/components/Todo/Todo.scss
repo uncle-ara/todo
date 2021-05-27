@@ -1,8 +1,23 @@
 .base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo {
+  word-wrap: break-word;
+}
+
+.button {
+}
+
+.checkbox {
 }
 
 .text {
   font-size: 18px;
+  margin-left: 10px;
+  word-wrap: break-word;
 
   &_selected {
     color: rgb(140, 140, 140);

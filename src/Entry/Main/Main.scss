@@ -1,5 +1,9 @@
 .base {
-  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+  background-image: linear-gradient(
+    109.6deg,
+    rgba(62, 161, 219, 1) 11.2%,
+    rgba(93, 52, 236, 1) 100.2%
+  );
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -7,7 +11,8 @@
 }
 
 .panel {
-  width: 350px;
+  width: 500px;
+  min-height: 80px;
   background: white;
   border-radius: 3px;
   display: flex;
@@ -17,7 +22,13 @@
 }
 
 .input {
-  padding: 10px;
+  width: 90%;
+}
+
+.todos {
+  width: 90%;
+  margin: 20px 0;
+  word-wrap: break-word;
 }
 
 .title {
@@ -41,5 +52,29 @@
   }
 }
 
-.todos {
+.filters {
+  width: 90%;
+  margin-bottom: 10px;
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.controls {
+  display: flex;
+  align-self: center;
+  width: 90%;
+  margin: 15px 0;
+
+  .deleteSelection {
+    align-self: center;
+    justify-content: center;
+    margin-left: 10px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 }

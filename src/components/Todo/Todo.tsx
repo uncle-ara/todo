@@ -41,27 +41,39 @@ export const Todo = React.memo(({ value }: Props) => {
 
   return (
     <div className={styles.base}>
-      <Checkbox checked={value.selected} onChange={handleCheck}></Checkbox>
-      {!editMode && (
-        <span
-          className={
-            value.selected ? cx(styles.text, styles.text_selected) : styles.text
-          }
-          onDoubleClick={() => setEditMode(true)}
-        >
-          {value.text}
-        </span>
-      )}
-      {editMode && (
-        <input
-          onChange={(event) => setInputText(event.currentTarget.value)}
-          value={inputText}
-          autoFocus={true}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-        />
-      )}
-      {/* <label>
+      <div className={styles.todo}>
+        <Checkbox
+          className={styles.checkbox}
+          checked={value.selected}
+          onChange={handleCheck}
+        ></Checkbox>
+        {!editMode && (
+          <span
+            className={value.selected ? cx(styles.text, styles.text_selected) : styles.text}
+            onDoubleClick={() => setEditMode(true)}
+          >
+            {value.text}
+          </span>
+        )}
+        {editMode && (
+          <input
+            onChange={(event) => setInputText(event.currentTarget.value)}
+            value={inputText}
+            autoFocus={true}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+          />
+        )}
+      </div>
+      <div className={styles.button}>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
+    </div>
+  )
+})
+
+{
+  /* <label>
         <input
           type="checkbox"
           checked={value.selected}
@@ -79,9 +91,5 @@ export const Todo = React.memo(({ value }: Props) => {
             onKeyDown={handleKeyDown}
           />
         )}
-      </label> */}
-
-      <button onClick={handleDelete}>Delete</button>
-    </div>
-  )
-})
+      </label> */
+}

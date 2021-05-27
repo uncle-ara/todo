@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 
-import { Divider, Input } from 'antd'
+import { Input, Button } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -45,32 +46,41 @@ export const Main = React.memo(() => {
   )
 
   const handleClickSendTodo = () => {
-    addTodo({
-      id: uuidv4(),
-      text: inputText,
-      selected: false,
-    })
-    setInputText('')
+    if (inputText.trim() != '') {
+      addTodo({
+        id: uuidv4(),
+        text: inputText,
+        selected: false,
+      })
+      setInputText('')
+    }
   }
 
   const handleSelectedRemove = () => {
-    for (const iterator of Object.values(todosState.storage)) {
-      if (iterator.selected) {
-        remoteTodo(iterator.id)
+    for (const todo of Object.values(todosState.storage)) {
+      if (todo.selected) {
+        remoteTodo(todo.id)
       }
     }
   }
+
+  const hasTodos = Object.values(todosState.storage).length != 0
 
   return (
     <div className={styles.base}>
       <div className={styles.title}>TODOS</div>
       <div className={styles.panel}>
+        {hasTodos && (
+          <div className={styles.controls}>
+            <Button onClick={selectAll} type="primary" icon={<DownOutlined />} size="small" />
+            {countTodos.completed != 0 && (
+              <div className={styles.deleteSelection} onClick={handleSelectedRemove}>
+                {`Clear Completed (${countTodos.completed})`}
+              </div>
+            )}
+          </div>
+        )}
         <div className={styles.input}>
-          <button onClick={handleSelectedRemove}>Delete</button>
-          <button onClick={selectAll}>All</button>
-          <div>{countTodos.notCompleted} Item left</div>
-          <div>Clear completed ({countTodos.completed})</div>
-
           <Search
             placeholder="What needs to be done?"
             enterButton="Enter"
@@ -80,16 +90,25 @@ export const Main = React.memo(() => {
             onSearch={handleClickSendTodo}
           />
         </div>
-        <div className={styles.todos}>
-          {Object.values(todosState.storage)
-            .filter(filterTodos[todosState.filter])
-            .map((todo) => (
-              <Todo key={todo.id} value={todo} />
-            ))}
-        </div>
-        <div className={styles.filters}>
-          {Object.keys(todosState.storage).length != 0 && <Filters />}
-        </div>
+        {hasTodos && (
+          <div className={styles.todos}>
+            {Object.values(todosState.storage)
+              .filter(filterTodos[todosState.filter])
+              .map((todo) => (
+                <Todo key={todo.id} value={todo} />
+              ))}
+          </div>
+        )}
+        {hasTodos && (
+          <div className={styles.filters}>
+            <div className={styles.countTodos}>
+              {countTodos.notCompleted
+                ? `${countTodos.notCompleted} item left`
+                : `${countTodos.notCompleted} items left`}
+            </div>
+            <Filters />
+          </div>
+        )}
       </div>
     </div>
   )
