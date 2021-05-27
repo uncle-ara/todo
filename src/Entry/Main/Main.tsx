@@ -95,7 +95,9 @@ export const Main = React.memo(() => {
             {Object.values(todosState.storage)
               .filter(filterTodos[todosState.filter])
               .map((todo) => (
-                <Todo key={todo.id} value={todo} />
+                <div className={styles.todo} key={todo.id}>
+                  <Todo value={todo} />
+                </div>
               ))}
           </div>
         )}

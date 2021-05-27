@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
-import { Checkbox } from 'antd'
+import { Checkbox, Input } from 'antd'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 import { Todo as TodoStruct } from '~/reducers/todos'
 import useAction from '~/hooks/useAction'
@@ -35,38 +36,47 @@ export const Todo = React.memo(({ value }: Props) => {
     selectTodo(value.id, event.target.checked)
   }
 
-  const handleDelete = () => {
+  const handleDeleteTodo = () => {
     remoteTodo(value.id)
   }
 
+  const handleEditTodo = () => {
+    setEditMode(true)
+  }
+
   return (
-    <div className={styles.base}>
-      <div className={styles.todo}>
-        <Checkbox
-          className={styles.checkbox}
-          checked={value.selected}
-          onChange={handleCheck}
-        ></Checkbox>
-        {!editMode && (
-          <span
-            className={value.selected ? cx(styles.text, styles.text_selected) : styles.text}
-            onDoubleClick={() => setEditMode(true)}
-          >
-            {value.text}
-          </span>
-        )}
-        {editMode && (
-          <input
-            onChange={(event) => setInputText(event.currentTarget.value)}
-            value={inputText}
-            autoFocus={true}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-          />
-        )}
-      </div>
-      <div className={styles.button}>
-        <button onClick={handleDelete}>Delete</button>
+    <div className={value.selected ? cx(styles.base, styles.base_selected) : styles.base}>
+      <div className={styles.wrapper}>
+        <div className={styles.todo}>
+          <Checkbox
+            className={styles.checkbox}
+            checked={value.selected}
+            onChange={handleCheck}
+          ></Checkbox>
+          {!editMode && (
+            <span
+              className={value.selected ? cx(styles.text, styles.text_selected) : styles.text}
+              onDoubleClick={() => setEditMode(true)}
+            >
+              {value.text}
+            </span>
+          )}
+          {editMode && (
+            <Input
+              className={styles.input}
+              size={'small'}
+              onChange={(event) => setInputText(event.currentTarget.value)}
+              value={inputText}
+              autoFocus={true}
+              onBlur={handleBlur}
+              onKeyDown={handleKeyDown}
+            />
+          )}
+        </div>
+        <div className={styles.controls}>
+          <EditOutlined className={styles.editTodo} onClick={handleEditTodo} />
+          <DeleteOutlined className={styles.deleteTodo} onClick={handleDeleteTodo} />
+        </div>
       </div>
     </div>
   )

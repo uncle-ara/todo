@@ -1,23 +1,61 @@
 .base {
+  padding: 4px 0;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  // box-shadow: 3px 3px 16px rgba(0, 0, 0, 0.15);
+  // -webkit-box-shadow: 3px 3px 16px rgba(0, 0, 0, 0.15);
+
+  &_selected {
+    border: 1px solid #1890ff;
+  }
+}
+
+.wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 20px;
 }
 
 .todo {
-  word-wrap: break-word;
-}
-
-.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkbox {
+  margin-bottom: 3px;
+}
+
+.input {
+  margin-left: 10px;
+  &:focus {
+    outline: 0;
+    outline-offset: 0;
+    box-shadow: none;
+  }
+}
+
+.controls {
+  font-size: 19px;
+
+  &:hover {
+    color: #1890ff;
+    transform: scale(1.1);
+  }
+
+  .editTodo {
+  }
+
+  .deleteTodo {
+  }
 }
 
 .text {
   font-size: 18px;
   margin-left: 10px;
-  word-wrap: break-word;
+  white-space: pre-line;
+  word-break: break-all;
 
   &_selected {
     color: rgb(140, 140, 140);

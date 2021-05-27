@@ -13,7 +13,7 @@
 .panel {
   width: 500px;
   min-height: 80px;
-  background: white;
+  background: #fff;
   border-radius: 3px;
   display: flex;
   justify-content: center;
@@ -28,13 +28,18 @@
 .todos {
   width: 90%;
   margin: 20px 0;
-  word-wrap: break-word;
+}
+
+.todo {
+  & + .todo {
+    margin-top: 10px;
+  }
 }
 
 .title {
   margin-top: 100px;
   margin-bottom: 20px;
-  font-size: 3em;
+  font-size: 3.5em;
   font-family: sans-serif;
   text-transform: uppercase;
   -webkit-text-stroke: 1px white;
