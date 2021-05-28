@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 .todo {
@@ -30,24 +30,28 @@
 .input {
   margin-left: 10px;
   &:focus {
-    outline: 0;
-    outline-offset: 0;
     box-shadow: none;
+    border: 1px solid #d9d9d9;
   }
 }
 
 .controls {
   font-size: 19px;
 
-  &:hover {
-    color: #1890ff;
-    transform: scale(1.1);
-  }
-
   .editTodo {
+    margin-left: 15px;
+    &:hover {
+      color: #1890ff;
+      transform: scale(1.05);
+    }
   }
 
   .deleteTodo {
+    margin-left: 15px;
+    &:hover {
+      color: #1890ff;
+      transform: scale(1.05);
+    }
   }
 }
 

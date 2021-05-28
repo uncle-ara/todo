@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 
 import { Input, Button } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
 import 'antd/dist/antd.css'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -70,16 +69,6 @@ export const Main = React.memo(() => {
     <div className={styles.base}>
       <div className={styles.title}>TODOS</div>
       <div className={styles.panel}>
-        {hasTodos && (
-          <div className={styles.controls}>
-            <Button onClick={selectAll} type="primary" icon={<DownOutlined />} size="small" />
-            {countTodos.completed != 0 && (
-              <div className={styles.deleteSelection} onClick={handleSelectedRemove}>
-                {`Clear Completed (${countTodos.completed})`}
-              </div>
-            )}
-          </div>
-        )}
         <div className={styles.input}>
           <Search
             placeholder="What needs to be done?"
@@ -90,6 +79,18 @@ export const Main = React.memo(() => {
             onSearch={handleClickSendTodo}
           />
         </div>
+        {hasTodos && (
+          <div className={styles.controls}>
+            <Button className={styles.buttonSelect} onClick={selectAll} type="primary" size="small">
+              Select all
+            </Button>
+            {countTodos.completed != 0 && (
+              <div className={styles.deleteSelection} onClick={handleSelectedRemove}>
+                {`Clear Completed (${countTodos.completed})`}
+              </div>
+            )}
+          </div>
+        )}
         {hasTodos && (
           <div className={styles.todos}>
             {Object.values(todosState.storage)
@@ -111,6 +112,12 @@ export const Main = React.memo(() => {
             <Filters />
           </div>
         )}
+      </div>
+      <div className={styles.footer}>
+        <p>Double-click to edit a todo</p>
+        <p>
+          Written by <a href="https://github.com/uncle-ara">Mehmet Ozensel</a>
+        </p>
       </div>
     </div>
   )

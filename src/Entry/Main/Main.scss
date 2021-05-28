@@ -12,7 +12,7 @@
 
 .panel {
   width: 500px;
-  min-height: 80px;
+  // min-height: 80px;
   background: #fff;
   border-radius: 3px;
   display: flex;
@@ -23,11 +23,11 @@
 
 .input {
   width: 90%;
+  margin: 15px auto;
 }
 
 .todos {
   width: 90%;
-  margin: 20px 0;
 }
 
 .todo {
@@ -59,7 +59,7 @@
 
 .filters {
   width: 90%;
-  margin-bottom: 10px;
+  margin: 15px auto;
   display: grid;
   justify-content: start;
   align-items: center;
@@ -69,8 +69,13 @@
 .controls {
   display: flex;
   align-self: center;
+  justify-content: space-between;
   width: 90%;
-  margin: 15px 0;
+  margin: 10px auto;
+
+  .buttonSelect {
+    font-size: 14px;
+  }
 
   .deleteSelection {
     align-self: center;
@@ -81,5 +86,25 @@
       text-decoration: underline;
       cursor: pointer;
     }
+  }
+}
+
+.footer {
+  margin: 65px auto 0;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+
+  & p {
+    line-height: 1;
+  }
+
+  & a {
+    color: inherit;
+    font-weight: 400;
+  }
+
+  & a:hover {
+    text-decoration: underline;
   }
 }
