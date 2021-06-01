@@ -1,5 +1,5 @@
 {
-  "main.css": "/todo/main.css",
-  "bundle.js": "/todo/main.js",
-  "index.html": "/todo/index.html"
+  "/todo/main.css": "main.css",
+  "/todo/main.js": "bundle.js",
+  "/todo/index.html": "index.html"
 }
