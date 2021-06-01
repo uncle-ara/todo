@@ -1,6 +1,7 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -72,6 +73,7 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new WebpackManifestPlugin({ basePath: '/todo/' }),
+    new FaviconsWebpackPlugin(path.resolve(__dirname, 'public', 'favicon.png')),
   ],
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),
