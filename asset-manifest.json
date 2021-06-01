@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.css": "/todo/main.css",
+    "bundle.js": "/todo/bundle.js"
+  },
+  "entrypoints": [
+    "main.css",
+    "bundle.js"
+  ]
+}
