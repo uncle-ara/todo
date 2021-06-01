@@ -10,7 +10,9 @@
     "prettier-check": "prettier --check ./src",
     "prettier-fix": "prettier --write ./src",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "snatvb",
   "license": "ISC",
@@ -39,6 +41,7 @@
     "babel-loader": "8.2.2",
     "cross-env": "7.0.3",
     "css-loader": "5.1.0",
+    "gh-pages": "3.2.0",
     "html-loader": "2.1.1",
     "html-webpack-plugin": "5.2.0",
     "husky": "5.1.1",
