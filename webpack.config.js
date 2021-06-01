@@ -1,6 +1,7 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
@@ -10,7 +11,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    publicPath: '',
   },
   mode: isProd ? 'production' : 'development',
   resolve: {
@@ -35,14 +36,12 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: isProd
-                  ? '[hash]'
-                  : '[name]-[local]_[hash:base64:5]',
+                localIdentName: isProd ? '[hash]' : '[name]-[local]_[hash:base64:5]',
                 localIdentContext: path.resolve(__dirname, 'src'),
               },
             },
@@ -72,6 +71,7 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new WebpackManifestPlugin({ basePath: '/todo/' }),
   ],
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),

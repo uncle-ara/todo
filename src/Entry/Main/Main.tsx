@@ -80,37 +80,40 @@ export const Main = React.memo(() => {
           />
         </div>
         {hasTodos && (
-          <div className={styles.controls}>
-            <Button className={styles.buttonSelect} onClick={selectAll} type="primary" size="small">
-              Select all
-            </Button>
-            {countTodos.completed != 0 && (
-              <div className={styles.deleteSelection} onClick={handleSelectedRemove}>
-                {`Clear Completed (${countTodos.completed})`}
-              </div>
-            )}
-          </div>
-        )}
-        {hasTodos && (
-          <div className={styles.todos}>
-            {Object.values(todosState.storage)
-              .filter(filterTodos[todosState.filter])
-              .map((todo) => (
-                <div className={styles.todo} key={todo.id}>
-                  <Todo value={todo} />
+          <>
+            <div className={styles.controls}>
+              <Button
+                className={styles.buttonSelect}
+                onClick={selectAll}
+                type="primary"
+                size="small"
+              >
+                Select all
+              </Button>
+              {countTodos.completed != 0 && (
+                <div className={styles.deleteSelection} onClick={handleSelectedRemove}>
+                  {`Clear Completed (${countTodos.completed})`}
                 </div>
-              ))}
-          </div>
-        )}
-        {hasTodos && (
-          <div className={styles.filters}>
-            <div className={styles.countTodos}>
-              {countTodos.notCompleted
-                ? `${countTodos.notCompleted} item left`
-                : `${countTodos.notCompleted} items left`}
+              )}
             </div>
-            <Filters />
-          </div>
+            <div className={styles.todos}>
+              {Object.values(todosState.storage)
+                .filter(filterTodos[todosState.filter])
+                .map((todo) => (
+                  <div className={styles.todo} key={todo.id}>
+                    <Todo value={todo} />
+                  </div>
+                ))}
+            </div>
+            <div className={styles.filters}>
+              <div className={styles.countTodos}>
+                {countTodos.notCompleted
+                  ? `${countTodos.notCompleted} item left`
+                  : `${countTodos.notCompleted} items left`}
+              </div>
+              <Filters />
+            </div>
+          </>
         )}
       </div>
       <div className={styles.footer}>

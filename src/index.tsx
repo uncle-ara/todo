@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider as Redux } from 'react-redux'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
 
-import store from './store'
+import store, { persistor } from './store'
 import { Entry } from './Entry'
 
 import 'normalize.css'
@@ -11,11 +11,11 @@ import './global.scss'
 
 const App = () => {
   return (
-    <Router>
-      <Redux store={store}>
+    <Redux store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <Entry />
-      </Redux>
-    </Router>
+      </PersistGate>
+    </Redux>
   )
 }
 
