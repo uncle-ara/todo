@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
 import { Checkbox, Input } from 'antd'
+import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 import { Todo as TodoStruct } from '~/reducers/todos'
 import useAction from '~/hooks/useAction'
 import actions from '~/actions'
 import styles from './Todo.scss'
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
 
 export type Props = {
   value: TodoStruct
@@ -34,14 +34,6 @@ export const Todo = React.memo(({ value }: Props) => {
 
   const handleCheck = (event: CheckboxChangeEvent) => {
     selectTodo(value.id, event.target.checked)
-  }
-
-  const handleDeleteTodo = () => {
-    remoteTodo(value.id)
-  }
-
-  const handleEditTodo = () => {
-    setEditMode(true)
   }
 
   return (
@@ -74,32 +66,10 @@ export const Todo = React.memo(({ value }: Props) => {
           )}
         </div>
         <div className={styles.controls}>
-          <EditOutlined className={styles.editTodo} onClick={handleEditTodo} />
-          <DeleteOutlined className={styles.deleteTodo} onClick={handleDeleteTodo} />
+          <EditOutlined className={styles.editTodo} onClick={() => setEditMode(true)} />
+          <DeleteOutlined className={styles.deleteTodo} onClick={() => remoteTodo(value.id)} />
         </div>
       </div>
     </div>
   )
 })
-
-{
-  /* <label>
-        <input
-          type="checkbox"
-          checked={value.selected}
-          onChange={handleCheck}
-        />
-        {!editMode && (
-          <span onDoubleClick={() => setEditMode(true)}>{value.text}</span>
-        )}
-        {editMode && (
-          <input
-            onChange={(event) => setInputText(event.currentTarget.value)}
-            value={inputText}
-            autoFocus={true}
-            onBlur={() => setEditMode(false)}
-            onKeyDown={handleKeyDown}
-          />
-        )}
-      </label> */
-}
