@@ -1,29 +1,44 @@
 .base {
-  background: linear-gradient(to right, #09203f, #537895);
+  background-image: linear-gradient(
+    109.6deg,
+    rgba(62, 161, 219, 1) 11.2%,
+    rgba(93, 52, 236, 1) 100.2%
+  );
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .panel {
-  width: 350px;
-  height: 400px;
-  background: white;
-  border-radius: 5px;
+  width: 500px;
+  background: #fff;
+  border-radius: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .input {
-  width: 95%;
+  width: 90%;
+  margin: 15px auto;
+}
+
+.todos {
+  width: 90%;
+}
+
+.todo {
+  & + .todo {
+    margin-top: 10px;
+  }
 }
 
 .title {
+  margin-top: 100px;
   margin-bottom: 20px;
-  font-size: 3em;
+  font-size: 3.5em;
   font-family: sans-serif;
   text-transform: uppercase;
   -webkit-text-stroke: 1px white;
@@ -38,5 +53,57 @@
     100% {
       opacity: 1;
     }
+  }
+}
+
+.filters {
+  width: 90%;
+  margin: 15px auto;
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.controls {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 10px auto;
+
+  .buttonSelect {
+    font-size: 14px;
+  }
+
+  .deleteSelection {
+    align-self: center;
+    justify-content: center;
+    margin-left: 10px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.footer {
+  margin: 65px auto 0;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+
+  & p {
+    line-height: 1;
+  }
+
+  & a {
+    color: inherit;
+    font-weight: 400;
+  }
+
+  & a:hover {
+    text-decoration: underline;
   }
 }
